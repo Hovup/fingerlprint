@@ -1,0 +1,12 @@
+{application, fingerlprint,
+ [
+  {description, "FINGERPRINT TOOLS FOR ERLANG"},
+  {vsn, git},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { fingerlprint_app, []}},
+  {env, []}
+]}.
