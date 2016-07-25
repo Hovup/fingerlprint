@@ -1,0 +1,64 @@
+
+FINGER PRINT TOOLS FOR ERLANG
+
+OVERVIEW
+~~~~~~~~
+The port driver makes a comparison between 2 FMD's for check if match or not.
+Before start, ensure that in you environment system exists the nexts paths:
+
+
+	ERL_ROOT 	 = /usr/local/lib/erlang
+	ISAMPLERFLAGSUaU = /opt/DigitalPersona/UareUSDK/Linux/Samples/UareUSample/
+	IFLAGSUaU 	 = /opt/DigitalPersona/UareUSDK/Include/
+	LFLAGSUaU 	 = /opt/DigitalPersona/UareUSDK/Linux/lib/x86
+
+
+BUILDING
+~~~~~~~~
+To build the port driver and shared object:	
+
+	$ make lib=fingerlprint
+
+The param lib is for naming the port driver shared object (.so)
+All c_src & src code must be compiled and a lib directory must contain a fingerlprint.so,
+this is the shared object to communicate erlang and C
+
+
+HOW TO USE AND IMPLEMENT
+~~~~~~~~~~~~~~~~~~~~~~~~
+Now we are available to start and test:
+NOTE: You must got any valid FMD to send in the port driver, a FMD is a binary term in erlang
+To start application:
+
+	$ make demo
+
+An erlang shell must be opened, now type the next line to ensure that fingerlprint is started:
+
+	> application:which_applications().
+	[{fingerlprint,"Finger Print Tools","0.2"},
+	..... % skip output
+
+Now just send two FMD's in the port and wait for the respone, example:
+
+	> FMDx = <<.....>>
+	> FMDy = <<.....>>
+	> fingerlprint:compare([FMDx, FMDy]).
+	.... % skip output
+
+There are four possibles responses:
+	
+	1.- when comparison match: 		{ok, {access, 'YES'}}
+	2.- when comparison not match:		{ok, {access, 'NO'}}
+	3.- when cannot allocate memmory:	{ok, {error, 'Cannot allocate memmory'}}
+	4.- when comparison fails:		{ok, {error, 'UNKNOWN', Error}} 
+
+
+DISTRIBUTED
+~~~~~~~~~~~
+If you want call the erlang port driver fingerlprint from another node, just start it on a valid nodename,
+sets the same cookie and call the function with a simple rpc.
+
+
+AUTHOR
+~~~~~~
+Jorge Garrido <jorge.garrido@morelosoft.com>
